@@ -63,10 +63,9 @@ export default function loader(content) {
   let publicPath = `__webpack_public_path__ + ${JSON.stringify(outputPath)}`;
 
   if (options.publicPath) {
-    if (typeof options.output === 'function') {
-      publicPath = options.output(content);
-    } else if (typeof options.publicPath === 'function') {
-      publicPath = options.publicPath(url);
+    if (typeof options.publicPath === 'function') {
+      if (this.cacheable) this.cacheable();
+      publicPath = options.publicPath(content);
     } else if (options.publicPath.endsWith('/')) {
       publicPath = options.publicPath + url;
     } else {
